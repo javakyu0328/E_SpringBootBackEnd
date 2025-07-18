@@ -1,0 +1,25 @@
+server:
+  port: 8083
+
+#database 연동 설정
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3308/db_member?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: Administrator
+    password: 1234
+  thymeleaf:
+    cache: false
+
+  # spring data jpa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update #update
+
+  # mybatis
+  mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    config-location: classpath:mybatis-config.xml
