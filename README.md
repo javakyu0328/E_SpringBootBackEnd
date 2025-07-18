@@ -1,5 +1,5 @@
 
-#   IntegratedWebProject 프로젝트
+#   SpringBoot BackEnd API
 
 ##  프로젝트 소개
 Vue 3 및 React 프론트엔드와 연동되는 **Spring Boot 기반 백엔드** 애플리케이션입니다.  
