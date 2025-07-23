@@ -6,6 +6,8 @@ import com.tel.member.entity.MemberEntity;
 import com.tel.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +20,26 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    @Autowired
+    private final BCryptPasswordEncoder passwordEncoder;
+
     public void save(MemberDTO memberDTO) {
         //1.dto->entity 변환
         //2.repository의 save 메서드 호출
         //repository의 save메서드 호출 (조건. entity객체를 넘겨줘야함)
 
-        MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
+        //MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO); //비밀번호 암호화로 인한 기존 코드 주석
+        //memberRepository.save(memberEntity);                                //비밀번호 암호화로 인한 기존 코드 주석
+
+        // 원래 비밀번호 -> 암호화
+        String rawPw = memberDTO.getPassword();
+        String encodedPw = passwordEncoder.encode(rawPw);
+        memberDTO.setPassword(encodedPw);
+        MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO); // 변환 메서드 만들기
+
+        log.info("회원가입 memberDTO:"+memberDTO.toString());
+        log.info("회원가입 memberDTO:"+memberEntity.toString());
+
         memberRepository.save(memberEntity);
     }
 
@@ -36,14 +52,19 @@ public class MemberService {
         if(byMemberId.isPresent()){
             //조회할 결과가 있다(해당 아이디를 가진 회원 정보가 있다)
             MemberEntity memberEntity = byMemberId.get();
-            if(memberEntity.getPassword().equals(memberDTO.getPassword())){
+            //if(memberEntity.getPassword().equals(memberDTO.getPassword())){  //비번암호화에 따른 기존 로직 주석처리
+            if(passwordEncoder.matches(memberDTO.getPassword(),memberEntity.getPassword())){
                 //비밀번호가 일치 하는 경우
                 //entity -> dto 변환 후 리턴
-                MemberDTO dto = MemberDTO.toMemberDTO(memberEntity);
-                return dto;
-            }else{
-                //비밀번호 불일치(로그인실패)
-                return  null;
+                //MemberDTO dto = MemberDTO.toMemberDTO(memberEntity); //비번암호화에 따른 기존 로직 주석처리
+                // return dto; //비번암호화에 따른 기존 로직 주석처리
+
+                // 비밀번호 일치 → Entity를 DTO로 변환해서 리턴
+                return MemberDTO.toMemberDTO(memberEntity);
+
+            }else {
+            //비밀번호 불일치(로그인실패)
+            return null;
             }
         }else {
             //조회 결과가 없다(해당 이메일을 가진 회원이 없다)
