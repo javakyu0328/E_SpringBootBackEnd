@@ -18,6 +18,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update #update
+      
+  # SQL 초기화 설정 비활성화
+  sql:
+    init:
+      mode: never
 
   # mybatis
   mybatis:

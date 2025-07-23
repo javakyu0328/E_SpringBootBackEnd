@@ -79,6 +79,61 @@ Vue3 / React 프론트엔드 요청 허용 설정
 | `GET`  | `/api/movies/{id}` | 영화 상세 정보 조회 |
 
 ---
+## Database 구조
+
+### 사용 DBMS
+
+- MySQL
+- 포트: 3308
+- DB 이름: db_member
+
+### 테이블 목록 및 설명
+| 테이블명 | 설명 |
+|-------------|-----|
+| member_table | 회원 정보 테이블 |
+| movie_recommendation | 영화 추천 매핑 테이블 |
+| movies  | 영화 정보 테이블 |
+
+### 테이블 상세 구조
+
+- member_table
+
+| 필드명               | 타입             | 널 허용 | 키   | 설명               |
+| ----------------- | -------------- | ---- | --- | ---------------- |
+| `id`              | `VARCHAR(255)` | X    | PRI | 회원 ID (기본키)      |
+| `name`            | `VARCHAR(255)` | O    |     | 이름               |
+| `birth`           | `VARCHAR(255)` | O    |     | 생년월일 (문자열 형식)    |
+| `email`           | `VARCHAR(255)` | X    | UNI | 이메일 (고유)         |
+| `password`        | `VARCHAR(255)` | X    |     | 비밀번호             |
+<br>
+
+- movie_recommendations
+
+| 필드명          | 타입            | 널 허용 | 키   | 설명                                 |
+| ------------ | ------------- | ---- | --- | ---------------------------------- |
+| `id`         | `BIGINT`      | X    | PRI | 추천 ID (기본키, 자동 증가)                 |
+| `created_at` | `DATETIME(6)` | O    |     | 추천 생성 일시                           |
+| `member_id`  | `VARCHAR(50)` | X    | MUL | 추천한 회원 ID (외래키: `member_table.id`) |
+| `movie_id`   | `BIGINT`      | X    | MUL | 추천 영화 ID (외래키: `movies.id`)        |
+<br>
+
+- movies
+
+| 필드명                    | 타입             | 널 허용 | 키   | 설명                 |
+| ---------------------- | -------------- | ---- | --- | ------------------ |
+| `id`                   | `BIGINT`       | X    | PRI | 영화 ID (기본키, 자동 증가) |
+| `created_at`           | `DATETIME(6)`  | O    | MUL | 등록일자               |
+| `description`          | `TEXT`         | O    |     | 영화 설명              |
+| `genre`                | `VARCHAR(100)` | O    | MUL | 장르                 |
+| `poster_url`           | `VARCHAR(500)` | O    |     | 포스터 이미지 URL        |
+| `recommendation_count` | `INT`          | O    | MUL | 추천 수 (기본값 0)       |
+| `release_date`         | `VARCHAR(20)`  | O    |     | 개봉일자 (문자열)         |
+| `title`                | `VARCHAR(255)` | X    | MUL | 영화 제목              |
+| `updated_at`           | `DATETIME(6)`  | O    |     | 최종 수정일자            |
+<br>
+---
+
+
 
 ## 프론트엔드 연동
 
@@ -90,7 +145,6 @@ Vue3 / React 프론트엔드 요청 허용 설정
 ---
 ## 접속
 -  localhost:8083에서 실행됨 (CORS 설정 시 백엔드에서 허용)
-
 - 프로젝트 통합을 통해 클라이언트-서버 간 실제 통신 기반 구조를 구현
 
 ---
