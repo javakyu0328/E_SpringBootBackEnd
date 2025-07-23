@@ -185,7 +185,7 @@ Vue3 / React 프론트엔드 요청 허용 설정
 
 ---
 ### 실행 화면 예시
-1. 적용 전
+1. 적용 전 <br>
 ![alt text](./src/main/resources/static/image/beforePw.png)
-2. 적용 후
+2. 적용 후 <br>
 ![alt text](./src/main/resources/static/image/afterPw.png)
