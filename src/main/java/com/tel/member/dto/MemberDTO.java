@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +18,8 @@ public class MemberDTO {
     private String email;
     private String birth;
     private String password;
+    private LocalDate joinDate;
+    private String grade;
 
 
     public static MemberDTO toMemberDTO(MemberEntity memberEntity){
@@ -25,7 +29,8 @@ public class MemberDTO {
         memberDTO.setEmail(memberEntity.getEmail());
         memberDTO.setBirth((memberEntity.getBirth()));
         memberDTO.setPassword(memberEntity.getPassword());
-
+        memberDTO.setJoinDate((memberEntity.getJoinDate()));
+        memberDTO.setGrade(memberEntity.getGrade());
 
         return memberDTO;
     }

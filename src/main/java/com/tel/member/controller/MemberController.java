@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -107,6 +108,20 @@ public class MemberController {
 
         if (memberDTO != null) {
             return ResponseEntity.ok(memberDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * 모든 회원 정보 목록 불러오기
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<MemberDTO>> findAll() {
+        List<MemberDTO> memberDTOList = memberService.findAll();
+
+        if (memberDTOList != null) {
+            return ResponseEntity.ok(memberDTOList);
         } else {
             return ResponseEntity.notFound().build();
         }
