@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,10 @@ public class MemberService {
         String rawPw = memberDTO.getPassword();
         String encodedPw = passwordEncoder.encode(rawPw);
         memberDTO.setPassword(encodedPw);
+
+        memberDTO.setJoinDate(LocalDate.now()); //배치작업을 위한 가입날짜 설정
+        memberDTO.setGrade("C"); //배치작업을 위한 기본 등급 설정
+
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO); // 변환 메서드 만들기
 
         log.info("회원가입 memberDTO:"+memberDTO.toString());

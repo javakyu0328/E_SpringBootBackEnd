@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Setter
 @Getter
@@ -29,6 +31,21 @@ public class MemberEntity {
     @Column
     private String password;
 
+    @Column(name = "join_date")
+    private LocalDate joinDate;
+
+    @Column(name = "grade")
+    private  String grade;
+
+    @PrePersist
+    public void prePersist(){
+        if(joinDate == null){
+            joinDate = LocalDate.now();
+        }
+        if(grade ==null){
+            grade = "C";
+        }
+    }
 
     public static MemberEntity toMemberEntity(MemberDTO memberDTO){
         MemberEntity memberEntity = new MemberEntity();
