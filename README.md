@@ -222,3 +222,33 @@ Vue3 / React 프론트엔드 요청 허용 설정
 - 스프링 배치가 회원 등급 자동 변경 로직을 수행할 수 있는 데이터 기반 마련
 - 관리자가 회원 가입 일자와 등급을 쉽게 확인 가능
 - 향후 배치 스케줄링과 비즈니스 로직 확장에 용이
+
+---
+---
+
+###  3. 로깅 AOP 기능 추가
+ **AOP(Aspect-Oriented Programming)** 를 이용한 **로깅 기능**을 도입하여 유지보수성과 가시성을 높였습니다.
+
+---
+###  버전  
+1.3V
+
+---
+### 적용 목적
+- 컨트롤러 메서드 실행 전/후 자동 로그 출력
+- 중복된 로깅 코드 제거
+
+---
+### 적용 대상
+- `com.tel.member.controller` 패키지 내의 모든 메서드
+- `com.tel.member.service` 패키지 내의 모든 메서드
+
+---
+### 적용 방식
+- 의존성 추가<br>
+ >implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+ ---
+ ### 실행 화면
+ 1. AOP 로깅
+ ![alt text](./src/main/resources/static/image/AOP.png)

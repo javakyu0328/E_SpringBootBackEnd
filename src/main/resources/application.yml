@@ -28,3 +28,10 @@ spring:
   mybatis:
     mapper-locations: classpath:mapper/*.xml
     config-location: classpath:mybatis-config.xml
+
+# 로깅 설정
+logging:
+  level:
+    com.tel.member.aop: INFO  # AOP 로그 레벨
+    com.tel.member: DEBUG     # 프로젝트 전체 디버그 로그
+    org.springframework.aop: DEBUG  # Spring AOP 내부 로그
